@@ -2,8 +2,8 @@ from django.db import models
 
 
 class Todo(models.Model):
-    created = models.DateTimeField()
-    finished = models.DateTimeField()
+    created = models.DateTimeField(auto_now=True)
+    finished = models.DateTimeField(default=None, null=True)
     text = models.TextField()
 
     @property

@@ -1,0 +1,15 @@
+{% block content %}
+    <h1>Todo List</h1>
+
+    {% if todo_list %}
+    <ul>
+
+      {% for todo in todo_list %}
+        {% include "todo/todo_detail.html" with todo=todo %}
+      {% endfor %}
+
+    </ul>
+    {% else %}
+      <p>There are no todo's.</p>
+    {% endif %}       
+{% endblock %}
