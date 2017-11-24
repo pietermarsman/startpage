@@ -1,4 +1,12 @@
 <div class="todo-detail">
     <p>{{ todo.text }}</p>
     <p>{{ todo.created|date }} - {{ todo.finished|date }}</p>
+    <p><a href="/{{ todo.id }}/flip_done">
+        {% if todo.done %}
+            Undone
+        {% else %}
+            Done
+        {% endif %}
+    </a>
+    </p>
 </div>
