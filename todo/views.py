@@ -13,6 +13,17 @@ from todo.models import Todo, TodoState
 class TodoListView(ListView):
     model = Todo
 
+    def get_queryset(self):
+        allowed_states = TodoState.objects.filter(timer_running=True)
+
+        state = self.kwargs.get('state')
+        if state is not None:
+            allowed_states = [TodoState.objects.get(computer_readable_text=state)]
+
+        return TodoListView.model.objects. \
+            filter(state__in=allowed_states). \
+            order_by('created')
+
 
 class TodoDetailView(DetailView):
     model = Todo
@@ -39,7 +50,7 @@ class ChangeTodoStateView(SingleObjectMixin, View):
     model = Todo
 
     def get(self, request, *args, **kwargs):
-        state = kwargs.get('action')
+        state = kwargs.get('state')
         todo = self.get_object()
 
         new_state = TodoState.objects.get(computer_readable_text=state)
