@@ -1,9 +1,10 @@
-from django.shortcuts import redirect
+from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.utils import timezone
+from django.views import View
 from django.views.generic import CreateView
 from django.views.generic import DetailView
 from django.views.generic import ListView
+from django.views.generic.detail import SingleObjectMixin
 
 from todo.models import Todo
 
@@ -24,12 +25,21 @@ class TodoCreateView(CreateView):
         return reverse('todo-list-view')
 
 
-def flip_done(request, pk):
-    todo = Todo.objects.get(id=pk)
-    if todo.done:
-        todo.finished = None
-    else:
-        todo.finished = timezone.now()
-    todo.save()
+class TodoActionView(SingleObjectMixin, View):
+    """Records the current user's interest in an author."""
+    model = Todo
 
-    return redirect(reverse('todo-list-view'))
+    def get(self, request, *args, **kwargs):
+        action = kwargs.get('action')
+        object = self.get_object()
+
+        if action == 'delete':
+            object.delete()
+
+        elif action == 'flip':
+            object.flip()
+
+        else:
+            raise RuntimeWarning("Action %s is not known" % action)
+
+        return HttpResponseRedirect(reverse('todo-list-view'))

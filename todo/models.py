@@ -34,6 +34,13 @@ class Todo(models.Model):
     finished = models.DateTimeField(default=None, null=True)
     text = models.TextField()
 
+    def flip(self):
+        if self.done:
+            self.finished = None
+        else:
+            self.finished = timezone.now()
+        self.save()
+
     @property
     def done(self):
         return self.finished is not None
