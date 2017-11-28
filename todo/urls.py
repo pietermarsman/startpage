@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from views import TodoListView, TodoDetailView, flip_done
+from todo.views import TodoListView, TodoDetailView, flip_done
 
 urlpatterns = [
     url(r'^$', TodoListView.as_view(), name='todo-list-view'),
