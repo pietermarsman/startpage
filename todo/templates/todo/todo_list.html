@@ -1,15 +1,30 @@
+{% extends 'todo/base.html' %}
+
 {% block content %}
-    <h1>Todo List</h1>
+<div class="row">
+    <div class="col-md-2">
+        <h2><a href="/new">+new</a></h2>
+    </div>
+    <div class="col-md-10 text-right">
+        <h2 class="d-inline"><a href="/filter/open">open</a></h2>
+        <h2 class="d-inline">/</h2>
+        <h2 class="d-inline"><a href="/filter/closed">closed</a></h2>
+        <h2 class="d-inline">/</h2>
+        <h2 class="d-inline"><a href="/filter/in-progress">in-progress</a></h2>
+        <h2 class="d-inline">/</h2>
+        <h2 class="d-inline"><a href="/filter/deleted">deleted</a></h2>
+    </div>
+</div>
 
-    {% if todo_list %}
-    <ul>
+{% if todo_list %}
 
-      {% for todo in todo_list %}
-        {% include "todo/todo_detail.html" with todo=todo %}
-      {% endfor %}
+<div class="row">
+    {% for todo in todo_list %}
+    {% include "todo/todo_detail.html" with todo=todo %}
+    {% endfor %}
+</div>
 
-    </ul>
-    {% else %}
-      <p>There are no todo's.</p>
-    {% endif %}       
+{% else %}
+<p>There are no todo's.</p>
+{% endif %}
 {% endblock %}

@@ -1,12 +1,12 @@
-<div class="todo-detail">
-    <p>{{ todo.text }}</p>
-    <p>{{ todo.created|date }} - {{ todo.finished|date }}</p>
-    <p><a href="/{{ todo.id }}/flip_done">
-        {% if todo.done %}
-            Undone
-        {% else %}
-            Done
-        {% endif %}
-    </a>
-    </p>
+<div class="col-md-4">
+    <div class="card mb-3">
+        <div class="card-body">
+            <h4 class="card-title">todo {{ todo.id }}</h4>
+            <h6 class="card-subtitle mb-2 text-muted">{{ todo.duration_str }}</h6>
+            <p class="card-text">{{ todo.text }}</p>
+            <a href="{{ todo.id }}/flip_done" class="card-link">{% if todo.done %}open{% else %}close{% endif %}</a>
+            <a href="{{ todo.id }}/edit" class="card-link">edit</a>
+            <a href="{{ todo.id }}/delete" class="card-link">delete</a>
+        </div>
+    </div>
 </div>
