@@ -4,6 +4,7 @@ from django.views import View
 from django.views.generic import CreateView
 from django.views.generic import DetailView
 from django.views.generic import ListView
+from django.views.generic import UpdateView
 from django.views.generic.detail import SingleObjectMixin
 
 from todo.models import Todo
@@ -18,6 +19,14 @@ class TodoDetailView(DetailView):
 
 
 class TodoCreateView(CreateView):
+    model = Todo
+    fields = ['text']
+
+    def get_success_url(self):
+        return reverse('todo-list-view')
+
+
+class TodoUpdateView(UpdateView):
     model = Todo
     fields = ['text']
 
