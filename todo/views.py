@@ -7,7 +7,7 @@ from django.views.generic import ListView
 from django.views.generic import UpdateView
 from django.views.generic.detail import SingleObjectMixin
 
-from todo.models import Todo
+from todo.models import Todo, TodoState
 
 
 class TodoListView(ListView):
@@ -20,7 +20,7 @@ class TodoDetailView(DetailView):
 
 class TodoCreateView(CreateView):
     model = Todo
-    fields = ['text']
+    fields = ['text', 'state']
 
     def get_success_url(self):
         return reverse('todo-list-view')
@@ -34,21 +34,15 @@ class TodoUpdateView(UpdateView):
         return reverse('todo-list-view')
 
 
-class TodoActionView(SingleObjectMixin, View):
+class ChangeTodoStateView(SingleObjectMixin, View):
     """Records the current user's interest in an author."""
     model = Todo
 
     def get(self, request, *args, **kwargs):
-        action = kwargs.get('action')
-        object = self.get_object()
+        state = kwargs.get('action')
+        todo = self.get_object()
 
-        if action == 'delete':
-            object.delete()
-
-        elif action == 'flip':
-            object.flip()
-
-        else:
-            raise RuntimeWarning("Action %s is not known" % action)
+        new_state = TodoState.objects.get(computer_readable_text=state)
+        todo.set_state(new_state)
 
         return HttpResponseRedirect(reverse('todo-list-view'))
