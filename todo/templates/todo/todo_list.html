@@ -8,8 +8,8 @@
 {% for state in states %}
 <li class="nav-item">
     <a class="nav-link {% if request.get_full_path == state.url %}active{% endif %}"
-       href="{% if request.get_full_path == state.url %}/{% else %}{{ state.url }}{% endif %}">{{
-        state.human_readable_text }}</a>
+       href="{% if request.get_full_path == state.url %}/{% else %}{{ state.url }}{% endif %}">
+        {{ state.human_readable_text }}</a>
 </li>
 {% endfor %}
 {% endblock %}
