@@ -6,13 +6,11 @@
         <h2><a href="/new">+new</a></h2>
     </div>
     <div class="col-md-10 text-right">
-        <h2 class="d-inline"><a href="/filtered/open">open</a></h2>
-        <h2 class="d-inline">/</h2>
-        <h2 class="d-inline"><a href="/filtered/closed">closed</a></h2>
-        <h2 class="d-inline">/</h2>
-        <h2 class="d-inline"><a href="/filtered/in_progress">in-progress</a></h2>
-        <h2 class="d-inline">/</h2>
-        <h2 class="d-inline"><a href="/filtered/deleted">deleted</a></h2>
+        {% for state in states %}
+        <div class="d-inline pl-3">
+            <h2 class="d-inline"><a href="{{ state.url }}">{{ state.human_readable_text }}</a></h2>
+        </div>
+        {% endfor %}
     </div>
 </div>
 
