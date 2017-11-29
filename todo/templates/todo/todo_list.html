@@ -1,17 +1,21 @@
 {% extends 'todo/base.html' %}
 
+{% block tabnav %}
+
+<li class="nav-item mr-5">
+    <a class="nav-link" href="/new">+new</a>
+</li>
+{% for state in states %}
+<li class="nav-item">
+    <a class="nav-link {% if request.get_full_path == state.url %}active{% endif %}"
+       href="{% if request.get_full_path == state.url %}/{% else %}{{ state.url }}{% endif %}">{{
+        state.human_readable_text }}</a>
+</li>
+{% endfor %}
+{% endblock %}
+
 {% block content %}
 <div class="row">
-    <div class="col-md-2">
-        <h2><a href="/new">+new</a></h2>
-    </div>
-    <div class="col-md-10 text-right">
-        {% for state in states %}
-        <div class="d-inline pl-3">
-            <h2 class="d-inline"><a href="{{ state.url }}">{{ state.human_readable_text }}</a></h2>
-        </div>
-        {% endfor %}
-    </div>
 </div>
 
 {% if todo_list %}
