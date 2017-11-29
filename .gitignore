@@ -1,5 +1,9 @@
 # sqlite database
 *.sqlite3
+*.bak
+
+# backups
+/todo/fixtures/
 
 # pycharm
 .idea
