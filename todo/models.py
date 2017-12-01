@@ -10,25 +10,58 @@ def strf_timedelta(duration):
     minutes = divmod(rem, 60)[0]
     seconds = divmod(rem, 60)[1]
 
-    if days > 0:
-        if hours > 0:
-            return "%d days and %d hours" % (days, hours)
-        else:
-            return "%d days" % days
-    else:
-        if hours > 0:
-            if minutes > 0:
-                return "%d hours and %d minutes" % (hours, minutes)
-            else:
-                return "%d hours" % hours
-        else:
-            if minutes > 0:
-                if seconds > 0:
-                    return "%d minutes and %d seconds" % (minutes, seconds)
+    if days == 0:
+        if hours == 0:
+            if minutes == 0:
+                if seconds == 0:
+                    return "0 seconds"
+                elif seconds == 1:
+                    return "1 second"
                 else:
-                    return "%d minutes" % minutes
+                    return "%d seconds" % seconds
+            if minutes == 1:
+                if seconds == 0:
+                    return "1 minute"
+                elif seconds == 1:
+                    return "1 minute and 1 second"
+                else:
+                    return "1 minute and %d seconds" % seconds
             else:
-                return "%d seconds" % seconds
+                if seconds == 0:
+                    return "%d minutes" % minutes
+                elif seconds == 1:
+                    return "%d minutes and 1 second" % minutes
+                else:
+                    return "%d minutes and %d seconds" % (minutes, seconds)
+        elif hours == 1:
+            if minutes == 0:
+                return "1 hour"
+            elif minutes == 1:
+                return "1 hour and 1 minute"
+            else:
+                return "1 hour and %d minutes" % minutes
+        else:
+            if minutes == 0:
+                return "%d hours" % hours
+            elif minutes == 1:
+                return "%d hours and 1 minute" % hours
+            else:
+                return "%d hours and %d minutes" % (hours, minutes)
+    elif days == 1:
+        if hours == 0:
+            return "1 day"
+        elif hours == 1:
+            return "1 day and 1 hour"
+        else:
+            return "1 day and %d hours" % hours
+    else:
+        if hours == 0:
+            return "%d days" % days
+        elif hours == 1:
+            return "%d days and 1 hour" % days
+        else:
+            return "%d days and %d hours" % (days, hours)
+
 
 
 class TodoState(models.Model):
@@ -86,9 +119,6 @@ class Todo(models.Model):
         return self.text
 
     def set_state(self, new_state):
-        print(new_state)
-        print(not new_state.timer_running)
-        print(self.finished is None)
         if new_state.timer_running:
             self.finished = None
         if (not new_state.timer_running) and (self.finished is None):
