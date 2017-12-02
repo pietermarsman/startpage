@@ -79,7 +79,7 @@ class TodoState(models.Model):
 
     @property
     def url(self):
-        return '/filtered/%s/' % self.computer_readable_text
+        return '/todo/filtered/%s/' % self.computer_readable_text
 
     def save(self, *args, **kwargs):
         self.computer_readable_text = re.sub('[^0-9a-zA-Z]+', '_', self.human_readable_text.lower())

@@ -5,10 +5,10 @@
             <h6 class="card-subtitle mb-2 text-muted">{{ todo.duration_str }}</h6>
             <p class="card-text">{{ todo.text }}</p>
             {% for state in todo.get_possible_states %}
-            <a href="/{{ todo.id }}/state/{{ state.computer_readable_text }}"
+            <a href="/todo/{{ todo.id }}/state/{{ state.computer_readable_text }}"
                class="card-link {% if todo.state != state %}text-muted{% endif %}">{{ state.human_readable_text }}</a>
             {% endfor %}
-            <a href="/{{ todo.id }}/edit" class="card-link">edit</a>
+            <a href="/todo/{{ todo.id }}/edit" class="card-link">edit</a>
         </div>
     </div>
 </div>

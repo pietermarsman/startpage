@@ -16,7 +16,11 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 
+from todo import views
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^', include('todo.urls'))
+    url(r'^$', views.TodoListView.as_view(), name='startpage'),
+    url(r'^todo/', include('todo.urls')),
+    url(r'^bookmark/', include('bookmark.urls'))
 ]
