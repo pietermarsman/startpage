@@ -50,7 +50,7 @@ class TestTodoState(TestCase):
     def test_url(self):
         state = TodoState.objects.get(pk=1)
 
-        self.assertEqual(state.url, '/filtered/open/')
+        self.assertEqual(state.url, '/todo/filtered/open/')
 
 
 class TestTodo(TestCase):

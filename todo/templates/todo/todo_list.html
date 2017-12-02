@@ -1,4 +1,5 @@
 {% extends 'todo/base.html' %}
+{% load endswith %}
 
 {% block tabnav %}
 <li class="nav-item mr-5">
@@ -6,19 +7,16 @@
 </li>
 {% for state in states %}
 <li class="nav-item">
-    <a class="nav-link {% if request.get_full_path == state.url %}active{% endif %}"
-       href="{% if request.get_full_path == state.url %}/{% else %}{{ state.url }}{% endif %}">
+    <a class="nav-link {% if request.get_full_path|endswith:state.url %}active{% endif %}"
+       href="{% if request.get_full_path|endswith:state.url %}/{% else %}{{ state.url }}{% endif %}">
         {{ state.human_readable_text }}</a>
 </li>
 {% endfor %}
 {% endblock %}
 
 {% block content %}
-<div class="row">
-</div>
 
 {% if todo_list %}
-
 <div class="row">
     {% for todo in todo_list %}
     {% include "todo/todo_detail.html" with todo=todo %}
@@ -28,4 +26,5 @@
 {% else %}
 <p>There are no todo's.</p>
 {% endif %}
+
 {% endblock %}

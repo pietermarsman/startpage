@@ -1,3 +1,5 @@
+{% load startswith %}
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -28,10 +30,10 @@
     <a class="navbar-brand" href="/">my homepage</a>
 
     <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
+        <li class="nav-item {% if request.get_full_path|startswith:'/todo' %}active{% endif %}">
             <a class="nav-link" href="/todo">my todo's</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item {% if request.get_full_path|startswith:'/bookmark' %}active{% endif %}">
             <a class="nav-link disabled" href="/bookmark">my bookmarks</a>
         </li>
     </ul>

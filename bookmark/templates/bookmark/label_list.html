@@ -1,0 +1,15 @@
+{% extends 'bookmark/base_bookmark.html' %}
+
+{% block content %}
+
+{% if label_list %}
+<div class="row">
+    {% for label in label_list %}
+    {% include "bookmark/label_detail.html" with label=label %}
+    {% endfor %}
+</div>
+{% else %}
+<p>There are no bookmarks.</p>
+{% endif %}
+
+{% endblock %}
