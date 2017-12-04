@@ -3,7 +3,7 @@
 *.bak
 
 # backups
-/todo/fixtures/
+/*/fixtures/
 
 # pycharm
 .idea
