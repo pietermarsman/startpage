@@ -11,7 +11,8 @@ class Label(models.Model):
 class Bookmark(models.Model):
     url = models.URLField()
     name = models.CharField(max_length=128, default=None, null=True)
-    label = models.ForeignKey(Label, related_name='bookmarks')
+    label = models.ForeignKey(Label, related_name='bookmarks',
+                              on_delete=models.PROTECT)
 
     def __str__(self):
         return self.name

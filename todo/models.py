@@ -90,7 +90,7 @@ class TodoState(models.Model):
 
 
 class Todo(models.Model):
-    state = models.ForeignKey(TodoState)
+    state = models.ForeignKey(TodoState, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
     finished = models.DateTimeField(default=None, null=True)
     text = models.TextField()
