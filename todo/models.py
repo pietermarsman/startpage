@@ -100,10 +100,6 @@ class Todo(models.Model):
         return Todo(state=state, *args, **kwargs)
 
     @property
-    def get_possible_states(self):
-        return TodoState.objects.all()
-
-    @property
     def duration(self):
         if self.state.timer_running:
             return timezone.now() - self.created

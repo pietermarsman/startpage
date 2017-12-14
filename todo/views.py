@@ -25,7 +25,8 @@ class TodoListView(ListView):
             allowed_states = [TodoState.objects.get(computer_readable_text=state)]
         todos = TodoListView.model.objects. \
             filter(state__in=allowed_states). \
-            order_by('created')
+            order_by('created'). \
+            select_related('state')
 
         logger.info('Retrieved {} todos'.format(len(todos)))
         return todos

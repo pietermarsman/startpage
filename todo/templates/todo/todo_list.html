@@ -19,7 +19,7 @@
 {% if todo_list %}
 <div class="row">
     {% for todo in todo_list %}
-    {% include "todo/todo_detail.html" with todo=todo %}
+    {% include "todo/todo_detail.html" with todo=todo states=states%}
     {% endfor %}
 </div>
 
