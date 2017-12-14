@@ -2,6 +2,7 @@ import logging
 
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.utils.timezone import localtime, now
 from django.views import View
 from django.views.generic import CreateView
 from django.views.generic import DetailView
@@ -35,6 +36,9 @@ class TodoListView(ListView):
         context = super().get_context_data(**kwargs)
 
         context['states'] = TodoState.objects.all()
+        context['completed_today'] = Todo.objects. \
+            filter(finished__gte=localtime(now()).date()). \
+            count()
 
         return context
 

@@ -37,6 +37,10 @@
             <a class="nav-link disabled" href="/bookmark">my bookmarks</a>
         </li>
     </ul>
+    <ul class="navbar-nav m-auto">
+        {% block nav_notification %}
+        {% endblock %}
+    </ul>
     <ul class="navbar-nav ml-auto">
         {% block tabnav %}
         {% endblock %}
