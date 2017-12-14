@@ -1,3 +1,5 @@
+import logging
+
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views import View
@@ -9,6 +11,8 @@ from django.views.generic.detail import SingleObjectMixin
 
 from todo.models import Todo, TodoState
 
+logger = logging.getLogger(__name__)
+
 
 class TodoListView(ListView):
     model = Todo
@@ -19,10 +23,12 @@ class TodoListView(ListView):
         state = self.kwargs.get('state')
         if state is not None:
             allowed_states = [TodoState.objects.get(computer_readable_text=state)]
-
-        return TodoListView.model.objects. \
+        todos = TodoListView.model.objects. \
             filter(state__in=allowed_states). \
             order_by('created')
+
+        logger.info('Retrieved {} todos'.format(len(todos)))
+        return todos
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -57,10 +63,13 @@ class ChangeTodoStateView(SingleObjectMixin, View):
     model = Todo
 
     def get(self, request, *args, **kwargs):
-        state = kwargs.get('state')
+        state_name = kwargs.get('state')
         todo = self.get_object()
+        old_state = todo.state
 
-        new_state = TodoState.objects.get(computer_readable_text=state)
+        new_state = TodoState.objects.get(computer_readable_text=state_name)
         todo.set_state(new_state)
+
+        logger.info("Changed todo {} from {} to {}".format(todo.id, old_state, new_state))
 
         return HttpResponseRedirect(reverse('todo-list-view'))

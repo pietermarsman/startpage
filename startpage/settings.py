@@ -101,6 +101,63 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Logging
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'formatters': {
+        'verbose': {
+            'format': '%(asctime)s %(levelname)8.8s %(name)20.20s %(message)s'
+        }
+    },
+    'handlers': {
+        'file_debug': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.TimedRotatingFileHandler',
+            'filename': 'logs/debug.log',
+            'when': 'D',
+            'interval': 1,
+            'backupCount': 100,
+            'formatter': 'verbose'
+        },
+        'file_info': {
+            'level': 'INFO',
+            'class': 'logging.handlers.TimedRotatingFileHandler',
+            'filename': 'logs/info.log',
+            'when': 'D',
+            'interval': 1,
+            'backupCount': 100,
+            'formatter': 'verbose'
+        },
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose'
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file_debug', 'file_info', 'console'],
+            'level': 'INFO',
+            'propagates': False,
+        },
+        'django.db.backends': {
+            'handlers': ['file_debug', 'file_info', ],
+            'level': 'DEBUG',
+            'propagates': False,
+        },
+        'todo': {
+            'handlers': ['file_debug', 'file_info', 'console'],
+            'level': 'DEBUG',
+            'propagates': False,
+        },
+        'bookmark': {
+            'handlers': ['file_debug', 'file_info', 'console'],
+            'level': 'DEBUG',
+            'propagates': False,
+        },
+    },
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/

@@ -63,7 +63,6 @@ def strf_timedelta(duration):
             return "%d days and %d hours" % (days, hours)
 
 
-
 class TodoState(models.Model):
     human_readable_text = models.TextField(max_length=128)
     computer_readable_text = models.TextField(max_length=128, default='error', unique=True)
