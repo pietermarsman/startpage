@@ -22,5 +22,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.TodoListView.as_view(), name='startpage'),
     url(r'^todo/', include('todo.urls')),
-    url(r'^bookmark/', include('bookmark.urls'))
+    url(r'^bookmark/', include('bookmark.urls')),
+    url(r'^page/', include(('page.urls')))
 ]
