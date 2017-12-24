@@ -1,0 +1,24 @@
+{% extends 'page/base_page.html' %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-9">
+        {% if page_list %}
+            {% for page in page_list %}
+            {% include "page/page_detail.html" with page=page %}
+            {% endfor %}
+        {% endif %}
+    </div>
+    <div class="col-md-3">
+        {% if label_list %}
+            {% for label in label_list %}
+                {% include "page/label_detail.html" with label=label %}
+            {% endfor %}
+        {% else %}
+            <p>There are no pages.</p>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

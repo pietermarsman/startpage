@@ -34,7 +34,10 @@
             <a class="nav-link" href="/todo">my todo's</a>
         </li>
         <li class="nav-item {% if request.get_full_path|startswith:'/bookmark' %}active{% endif %}">
-            <a class="nav-link disabled" href="/bookmark">my bookmarks</a>
+            <a class="nav-link" href="/bookmark">my bookmarks</a>
+        </li>
+        <li class="nav-item {% if request.get_full_path|startswith:'/page' %}active{% endif %}">
+            <a class="nav-link" href="/page">my pages</a>
         </li>
     </ul>
     <ul class="navbar-nav m-auto">

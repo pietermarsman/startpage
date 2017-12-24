@@ -1,0 +1,16 @@
+<div class="col-md-12 justify-content-between d-flex">
+    <a href="{{ page.url }}">
+        {{ page.name }}
+    </a>
+    {% for label in page.labels.objects %}
+        {{ label }}
+    {% endfor %}
+    <span>
+        <a class="badge badge-default badge-pill" href="/page/{{ page.pk }}/delete">
+            d
+        </a>
+        <a class="badge badge-default badge-pill" href="/page/{{ page.pk }}/edit">
+            e
+        </a>
+    </span>
+</div>
