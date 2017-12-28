@@ -15,7 +15,20 @@ from todo.models import Todo, TodoState
 logger = logging.getLogger(__name__)
 
 
-class TodoListView(ListView):
+class TodoViewMixin(object):
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['states'] = TodoState.objects.all()
+        context['completed_today'] = Todo.objects. \
+            filter(finished__gte=localtime(now()).date()). \
+            count()
+
+        return context
+
+
+class TodoListView(TodoViewMixin, ListView):
     model = Todo
 
     def get_queryset(self):
@@ -43,11 +56,7 @@ class TodoListView(ListView):
         return context
 
 
-class TodoDetailView(DetailView):
-    model = Todo
-
-
-class TodoCreateView(CreateView):
+class TodoCreateView(TodoViewMixin, CreateView):
     model = Todo
     fields = ['text', 'state']
 
@@ -55,7 +64,7 @@ class TodoCreateView(CreateView):
         return reverse('todo-list-view')
 
 
-class TodoUpdateView(UpdateView):
+class TodoUpdateView(TodoViewMixin, UpdateView):
     model = Todo
     fields = ['text']
 

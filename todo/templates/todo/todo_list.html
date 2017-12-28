@@ -1,24 +1,5 @@
-{% extends 'todo/base.html' %}
+{% extends 'todo/base_todo.html' %}
 {% load endswith %}
-
-{% block tabnav %}
-<li class="nav-item mr-5">
-    <a class="nav-link" href="/todo/new">+new</a>
-</li>
-{% for state in states %}
-<li class="nav-item">
-    <a class="nav-link {% if request.get_full_path|endswith:state.url %}active{% endif %}"
-       href="{% if request.get_full_path|endswith:state.url %}/{% else %}{{ state.url }}{% endif %}">
-        {{ state.human_readable_text }}</a>
-</li>
-{% endfor %}
-{% endblock %}
-
-{% block nav_notification %}
-<a class="nav-link active" href="/todo/statistics">
-    completed {{ completed_today }} {% if completed_today == 1 %} task {% else %} tasks {% endif %} today
-</a>
-{% endblock %}
 
 {% block content %}
 
