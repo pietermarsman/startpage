@@ -1,7 +1,11 @@
 import re
+from datetime import timedelta
 
 from django.db import models
+from django.db.models import Count
+from django.db.models.functions import TruncDate
 from django.utils import timezone
+from django.utils.timezone import localtime, now
 
 
 def strf_timedelta(duration):
@@ -63,11 +67,37 @@ def strf_timedelta(duration):
             return "%d days and %d hours" % (days, hours)
 
 
+def daterange(start_date, end_date):
+    """
+    Generate an iterator of dates between the two given dates.
+    taken from http://stackoverflow.com/questions/1060279/
+    """
+    for n in range(int((end_date - start_date).days + 1)):
+        yield start_date + timedelta(n)
+
+
 class TodoState(models.Model):
     human_readable_text = models.TextField(max_length=128)
     computer_readable_text = models.TextField(max_length=128, default='error', unique=True)
     priority = models.PositiveIntegerField(default=0)
     timer_running = models.BooleanField(default=True)
+
+    @classmethod
+    def completed_in_last(cls, days):
+        startdate = localtime(now() - timedelta(days=days + 1)).date()
+        enddate = localtime(now()).date()
+
+        completed = Todo.objects. \
+            filter(finished__gte=startdate). \
+            annotate(day=TruncDate('finished')). \
+            values('day'). \
+            annotate(count=Count('day')). \
+            values('day', 'count')
+        completed = {x['day']: x['count'] for x in completed}
+        completed = {day: completed[day] if day in completed else 0 for day in daterange(startdate, enddate)}
+        print(completed)
+
+        return completed
 
     @classmethod
     def get_default(cls):

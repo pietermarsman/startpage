@@ -1,11 +1,10 @@
+import json
 import logging
 
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.utils.timezone import localtime, now
 from django.views import View
 from django.views.generic import CreateView
-from django.views.generic import DetailView
 from django.views.generic import ListView
 from django.views.generic import UpdateView
 from django.views.generic.detail import SingleObjectMixin
@@ -21,9 +20,8 @@ class TodoViewMixin(object):
         context = super().get_context_data(**kwargs)
 
         context['states'] = TodoState.objects.all()
-        context['completed_today'] = Todo.objects. \
-            filter(finished__gte=localtime(now()).date()). \
-            count()
+        context['completed_json'] = json.dumps(list(TodoState.completed_in_last(days=7).values()))
+        print(context)
 
         return context
 
@@ -44,16 +42,6 @@ class TodoListView(TodoViewMixin, ListView):
 
         logger.info('Retrieved {} todos'.format(len(todos)))
         return todos
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        context['states'] = TodoState.objects.all()
-        context['completed_today'] = Todo.objects. \
-            filter(finished__gte=localtime(now()).date()). \
-            count()
-
-        return context
 
 
 class TodoCreateView(TodoViewMixin, CreateView):

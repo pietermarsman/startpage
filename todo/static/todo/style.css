@@ -1,0 +1,8 @@
+.chart {
+}
+.chart-circle {
+  background-color: steelblue;
+  margin: 5px;
+  color: white;
+  position: relative;
+}

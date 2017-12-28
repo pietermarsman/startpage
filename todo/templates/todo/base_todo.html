@@ -1,8 +1,16 @@
 {% extends 'todo/base.html' %}
 {% load endswith %}
+{% load static %}
+
+{% block nav_notification %}
+<a class="nav-link active" href="/todo/statistics">
+    <div class="chart d-sm-flex d-none">
+    </div>
+</a>
+{% endblock %}
 
 {% block tabnav %}
-<li class="nav-item mr-5">
+<li class="nav-item mr-4">
     <a class="nav-link" href="/todo/new">+new</a>
 </li>
 {% for state in states %}
@@ -14,8 +22,10 @@
 {% endfor %}
 {% endblock %}
 
-{% block nav_notification %}
-<a class="nav-link active" href="/todo/statistics">
-    completed {{ completed_today }} {% if completed_today == 1 %} task {% else %} tasks {% endif %} today
-</a>
+{% block endscripts %}
+<script type="text/javascript">
+    var data = {{ completed_json }}
+
+</script>
+<script type="text/javascript" src="{% static 'todo/completed-chart.js' %}"></script>
 {% endblock %}
