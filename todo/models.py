@@ -95,7 +95,6 @@ class TodoState(models.Model):
             values('day', 'count')
         completed = {x['day']: x['count'] for x in completed}
         completed = {day: completed[day] if day in completed else 0 for day in daterange(startdate, enddate)}
-        print(completed)
 
         return completed
 

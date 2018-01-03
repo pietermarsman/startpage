@@ -23,9 +23,6 @@
 {% endblock %}
 
 {% block endscripts %}
-<script type="text/javascript">
-    var data = {{ completed_json }}
-
-</script>
+<script type="text/javascript">var data = {{ completed_json }}</script>
 <script type="text/javascript" src="{% static 'todo/completed-chart.js' %}"></script>
 {% endblock %}

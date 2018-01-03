@@ -21,7 +21,6 @@ class TodoViewMixin(object):
 
         context['states'] = TodoState.objects.all()
         context['completed_json'] = json.dumps(list(TodoState.completed_in_last(days=7).values()))
-        print(context)
 
         return context
 
