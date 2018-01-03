@@ -27,10 +27,13 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# NEO4J
+NEOMODEL_NEO4J_BOLT_URL = os.environ.get('NEO4J_BOLT_URL', 'bolt://neo4j:neo4j@127.0.0.1:7687')
 
 # Application definition
 
 INSTALLED_APPS = [
+    'django_neomodel',
     'todo',
     'bookmark',
     'page',
