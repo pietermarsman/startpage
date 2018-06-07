@@ -59,4 +59,4 @@ class Command(BaseCommand):
 
         serialization.extend(labels.values())
 
-        jon.dump(serialization, open(options['output_path'], 'w'), indent=4, sort_keys=True)
+        json.dump(serialization, open(options['output_path'], 'w'), indent=4, sort_keys=True)
